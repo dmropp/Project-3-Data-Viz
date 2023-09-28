@@ -17,25 +17,25 @@ Base = automap_base()
 
 Base.prepare(autoload_with=engine)
 
-Crashes = Base.classes.oregon_crashes
+# Crashes = Base.classes.oregon_crashes
 
-# print(Base.classes.keys())
+print(Base.classes.keys())
 
 app = Flask(__name__)
 
-@app.route("/")
-def welcome():
-    session = Session(engine)
-    crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
-    session.close()
+# @app.route("/")
+# def welcome():
+#     session = Session(engine)
+#     # crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
+#     session.close()
 
-    return (
-        f"Welcome to our Oregon Crash App!",
-        jsonify(crash_dict)
-    )
+#     return (
+#         f"Welcome to our Oregon Crash App!"
+#         # jsonify(crash_dict)
+#     )
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)
 
 
 

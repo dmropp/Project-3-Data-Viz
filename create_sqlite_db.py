@@ -65,9 +65,18 @@ c = conn.cursor()
 # csv_crashes_2021 = pd.read_csv("Data/CRASH_2021.csv")
 # csv_crashes_2021.to_sql("crashes", conn, if_exists='append', index=False)
 
-# c.execute('''INSERT INTO oregon_crashes(CRASH_ID, CRASH_DT, LAT_DD, LONGTD_DD, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC) SELECT CRASH_ID, CRASH_DT, LAT_DD, LONGTD_DD, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC FROM crashes''')
+# c.execute('''INSERT INTO oregon_crashes(CRASH_ID, CRASH_DT, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
+#   CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
+#   CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
+#   CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
+#   CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC) 
+#   SELECT CRASH_ID, CRASH_DT, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
+#   CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
+#   CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
+#   CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
+#   CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC FROM crashes''')
 
-c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
+# c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
 
 conn.commit()
 
@@ -79,8 +88,22 @@ conn.close()
 #     CRASH_DT = Column(String)
 #     LAT_DD = Column(Float)
 #     LONGTD_DD = Column(Float)
+#     CRASH_TYP_CD = Column(String)
+#     CRASH_TYP_SHORT_DESC = Column(String)
+#     CRASH_SVRTY_CD = Column(Integer)
+#     CRASH_SVRTY_SHORT_DESC = Column(String)
 #     CRASH_EVNT_1_CD = Column(Integer)
 #     CRASH_EVNT_1_SHORT_DESC = Column(String)
+#     CRASH_EVNT_2_CD = Column(Integer)
+#     CRASH_EVNT_2_SHORT_DESC = Column(String)
+#     CRASH_EVNT_3_CD = Column(Integer)
+#     CRASH_EVNT_3_SHORT_DESC = Column(String)
+#     CRASH_CAUSE_1_CD = Column(Integer)
+#     CRASH_CAUSE_1_SHORT_DESC = Column(String)
+#     CRASH_CAUSE_2_CD = Column(Integer) 
+#     CRASH_CAUSE_2_SHORT_DESC = Column(String)
+#     CRASH_CAUSE_3_CD = Column(Integer)
+#     CRASH_CAUSE_3_SHORT_DESC = Column(String)
 
 
 # from sqlalchemy import create_engine
