@@ -40,8 +40,9 @@ def welcome():
 def crash_map():
     session = Session(engine)
 
-    results = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).filter(dt.datetime.strptime(Crashes.CRASH_DT.tostring, "%m/%d/%Y") >= (dt.date(2019, 1, 1))).all()
-    # results = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
+    # results = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).filter(dt.datetime.strptime(Crashes.CRASH_DT.tostring, "%m/%d/%Y") >= (dt.date(2019, 1, 1))).all()
+    results = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).filter(Crashes.CRASH_DT >= (dt.date(2019, 1, 1))).all()
+    #results = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
     # results = session.query(Crashes.CRASH_ID).all()
     
     session.close()
@@ -67,7 +68,7 @@ if __name__ == "__main__":
 #     print(column["name"], column["type"])
 
 # crash_list = session.query(Crashes.LAT_DD).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
-# print(crash_list)
+# print(len(crash_list))
 # date_list = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
 # print(date_list)
 # crash_list_array = []

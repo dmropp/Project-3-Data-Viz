@@ -63,7 +63,7 @@ c = conn.cursor()
 # csv_crashes_2021 = pd.read_csv("Data/CRASH_2021.csv")
 # csv_crashes_2021.to_sql("crashes", conn, if_exists='append', index=False)
 
-#  and copy data from the original table into this table. Run this code block fourth.
+#  Copy data from the original table into new table. Run this code block fourth.
 # c.execute('''INSERT INTO oregon_crashes(CRASH_ID, CRASH_DT, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
 #   CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
 #   CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
@@ -85,7 +85,7 @@ conn.commit()
 
 conn.close()
 
-# Create oregon_crashes class and new table with desired columns. Rrun this code block third.
+# Create oregon_crashes class and new table with desired columns. Run this code block third.
 # class Oregon_crashes(Base):
 #     __tablename__ = "oregon_crashes"
 #     CRASH_ID = Column(Integer, primary_key=True)
