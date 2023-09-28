@@ -19,5 +19,6 @@ Data Used
 - Crash Type
 - Crash Type Description
 - Route Name
+- Crash Severity
 
 https://www.sqlite.org/cli.html, referenced for how to create SQLite database in command line.
