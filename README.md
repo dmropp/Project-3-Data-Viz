@@ -14,11 +14,16 @@ Data Used
 
 - Crash ID - CRASH_ID
 - Date - CRASH_DT
-- Longitude - LONGTD_DD
-- Latitude - LAT_DD
-- Crash Type - CRASH_EVNT_1_CD (codes 034, 035)
-- Crash Type Description - CRASH_EVNT_1_SHORT_DESC
 - Route Name - HWY_MED_NM
-- Crash Severity - CRASH.SVRTY_CD
+- Latitude - LAT_DD
+- Longitude - LONGTD_DD
+- Crash Type - CRASH_TYP_CD
+- Crash Type Description - CRASH_TYP_SHORT_DESC
+- Crash Severity - CRASH_SVRTY_CD
+- Crash Severity Description - CRASH_SVRTY_SHORT_DESC
+- Crash Type - CRASH_EVNT_1_CD, CRASH_EVNT_2_CD, CRASH_EVNT_3_CD (codes 034 - GAME, 035 - DEER ELK)
+- Crash Type Description - CRASH_EVNT_1_SHORT_DESC, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_SHORT_DESC
+- Crash Cause - CRASH_CAUSE_1_CD, CRASH_CAUSE_2_CD, CRASH_CAUSE_3_CD
+- Crash Cause Description - CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_SHORT_DESC
 
 https://www.sqlite.org/cli.html, referenced for how to create SQLite database in command line.
