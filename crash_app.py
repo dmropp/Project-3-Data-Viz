@@ -19,9 +19,22 @@ Base.prepare(autoload_with=engine)
 
 Crashes = Base.classes.oregon_crashes
 
-print(Base.classes.keys())
+# print(Base.classes.keys())
 
-session = Session(engine)
+app = Flask(__name__)
+
+@app.route("/")
+def welcome():
+    session = Session(engine)
+    session.close()
+    return (
+        f"Welcome to our Oregon Crash App!"
+    )
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
 
 inspector = inspect(engine)
 print(inspector.get_table_names())
@@ -36,7 +49,7 @@ print(inspector.get_table_names())
 #     deer_crashes.append(record)
 # print(len(deer_crashes))
 
-crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
+# crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
 # print(len(crash_list))
 # crash_list_array = []
 # for crash in crash_list:
@@ -44,4 +57,4 @@ crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 3
 
 # print(len(crash_list_array))
 
-session.close()
+# session.close()

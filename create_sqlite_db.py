@@ -67,7 +67,7 @@ c = conn.cursor()
 
 # c.execute('''INSERT INTO oregon_crashes(CRASH_ID, CRASH_DT, LAT_DD, LONGTD_DD, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC) SELECT CRASH_ID, CRASH_DT, LAT_DD, LONGTD_DD, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC FROM crashes''')
 
-c.execute("VACUUM")
+c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
 
 conn.commit()
 
