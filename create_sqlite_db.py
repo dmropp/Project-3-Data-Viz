@@ -76,7 +76,7 @@ c = conn.cursor()
 #   CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
 #   CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC FROM crashes''')
 
-# c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
+c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
 
 conn.commit()
 

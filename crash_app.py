@@ -17,9 +17,11 @@ Base = automap_base()
 
 Base.prepare(autoload_with=engine)
 
-# Crashes = Base.classes.oregon_crashes
+Crashes = Base.classes.oregon_crashes
 
 print(Base.classes.keys())
+
+session = Session(engine) # will need to comment this out when creating API
 
 app = Flask(__name__)
 
@@ -52,12 +54,12 @@ print(inspector.get_table_names())
 #     deer_crashes.append(record)
 # print(len(deer_crashes))
 
-# crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
-# print(len(crash_list))
-# crash_list_array = []
-# for crash in crash_list:
-#     crash_list_array.append(crash)
+crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
+print(len(crash_list))
+crash_list_array = []
+for crash in crash_list:
+    crash_list_array.append(crash)
 
-# print(len(crash_list_array))
+print(len(crash_list_array))
 
-# session.close()
+session.close() # will need to comment this out when creating API
