@@ -15,6 +15,11 @@ Path(database_path).touch()
 conn = sqlite3.connect(database_path)
 c = conn.cursor()
 
+# This code creates an initial table to hold all data, imports the data from the csv files, creates a class with a second table, copies the
+# desired columns into the new table, drops the original table, and then clears the empty space in the database via vacuum. The SQLite database was
+# created via commands in the terminal.
+
+# Create the initial table for all columns in the csv files. Run this code block first.
 # c.execute('''CREATE TABLE crashes (CRASH_ID	int, SER_NO int, CRASH_DT date, CRASH_MO_NO	int, CRASH_DAY_NO int, CRASH_YR_NO int,
 #     CRASH_WK_DAY_CD	int, CRASH_HR_NO int, CRASH_HR_SHORT_DESC text, CNTY_ID	int, CNTY_NM text, CITY_SECT_ID	int, CITY_SECT_NM text,
 #     URB_AREA_CD	int, URB_AREA_SHORT_NM text, FC_CD int, FC_SHORT_DESC text, NHS_FLG text, HWY_NO int, HWY_SFX_NO int,
@@ -43,28 +48,22 @@ c = conn.cursor()
 #     TOT_MCYCLST_UNHELMTD_FATAL_CNT int, TOT_ALCHL_IMPAIRED_DRVR_INV_FATAL_CNT int, TOT_DRVR_AGE_01_20_CNT int,
 #     LANE_RDWY_DPRT_CRASH_FLG text)'''
 #     )
-# c.execute('''DROP TABLE crashes''')
-# c.execute('''DROP TABLE oregon_crashes''')
 
-
+# Import csv data to initial table. Run this code block second.
 # csv_crashes_2016 = pd.read_csv("Data/CRASH_2016.csv")
 # csv_crashes_2016.to_sql("crashes", conn, if_exists='append', index=False)
-
 # csv_crashes_2017 = pd.read_csv("Data/CRASH_2017.csv")
 # csv_crashes_2017.to_sql("crashes", conn, if_exists='append', index=False)
-
 # csv_crashes_2018 = pd.read_csv("Data/CRASH_2018.csv")
 # csv_crashes_2018.to_sql("crashes", conn, if_exists='append', index=False)
-
-# csv_crashes_2019 = pd.read_csv("Data/CRASH_2019.csv")
+# csv_crashes_2019 = pd.read_csv("Data/CRASH_2019.csv") 
 # csv_crashes_2019.to_sql("crashes", conn, if_exists='append', index=False)
-
 # csv_crashes_2020 = pd.read_csv("Data/CRASH_2020.csv")
 # csv_crashes_2020.to_sql("crashes", conn, if_exists='append', index=False)
-
 # csv_crashes_2021 = pd.read_csv("Data/CRASH_2021.csv")
 # csv_crashes_2021.to_sql("crashes", conn, if_exists='append', index=False)
 
+#  and copy data from the original table into this table. Run this code block fourth.
 # c.execute('''INSERT INTO oregon_crashes(CRASH_ID, CRASH_DT, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
 #   CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
 #   CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
@@ -76,12 +75,17 @@ c = conn.cursor()
 #   CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
 #   CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC FROM crashes''')
 
-c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
+# Drop the original table. Run this code block fifth.
+# c.execute('''DROP TABLE crashes''')
+
+# Deletes all empty space in the database. Run this code block sixth.
+# c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
 
 conn.commit()
 
 conn.close()
 
+# Create oregon_crashes class and new table with desired columns. Rrun this code block third.
 # class Oregon_crashes(Base):
 #     __tablename__ = "oregon_crashes"
 #     CRASH_ID = Column(Integer, primary_key=True)
@@ -104,18 +108,11 @@ conn.close()
 #     CRASH_CAUSE_2_SHORT_DESC = Column(String)
 #     CRASH_CAUSE_3_CD = Column(Integer)
 #     CRASH_CAUSE_3_SHORT_DESC = Column(String)
-
-
 # from sqlalchemy import create_engine
-
 # engine = create_engine("sqlite:///oregon_crashes.sqlite")
-
 # connection = engine.connect()
-
 # Base.metadata.create_all(engine)
-
 # from sqlalchemy.orm import Session
 # session = Session(bind=engine)
-
 # session.commit()
 # session.close()
