@@ -26,9 +26,12 @@ app = Flask(__name__)
 @app.route("/")
 def welcome():
     session = Session(engine)
+    crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
     session.close()
+
     return (
-        f"Welcome to our Oregon Crash App!"
+        f"Welcome to our Oregon Crash App!",
+        jsonify(crash_dict)
     )
 
 if __name__ == "__main__":
