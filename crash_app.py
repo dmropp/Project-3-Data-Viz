@@ -31,7 +31,12 @@ def welcome():
     session.close()
 
     return (
-        f"Welcome to our Oregon Crash App!"
+        f"<h2 id='Welcome Page Header'>Welcome to our Oregon Crash App!</h2>" 
+        f"<h3 id='Subheader'>Please use the following routes:</h3>"
+        f"<p>/api/v1.0/crash_map for json data of all car crashes in Oregon involving wild animals<br>"
+        f"/api/v1.0/dashboard for json data of all car crashes in Oregon involving wild animals<br>"
+        f"/api/v1.0/map_viz for an interactive map illustrating the location of all call crashes in Oregon involving wild animals <br>"
+        f"/api/v1.0/dashboard_viz for an interactive dashboard of statistics behind car crashes with wild animals in Oregon<p/>"
     )
 
 @app.route("/api/v1.0/crash_map")
@@ -206,13 +211,27 @@ def dashboard():
           
     return jsonify(animal_crashes)
 
-# @app.route("/api/v1.0/map_viz")
-# def map_viz():
-    #html <script> javascript file
+@app.route("/api/v1.0/map_viz")
+def map_viz():
+    return(
+        f"<head></head>"
+        f"<body>"
+        f"<h1>Map goes here</h1>"
+        f"<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' integrity='sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=' crossorigin=''></script>"
+        f"</body>"
+    )
+    # html <script> javascript file
     # html <script> css file
 
-#@app.route("/api/v1.0/dashboard_viz")
-# def dashboard_viz()
+@app.route("/api/v1.0/dashboard_viz")
+def dashboard_viz():
+    return(
+        f"<head></head>"
+        f"<body>"
+        f"<h1>Dashboard goes here</h1>"
+        f"<script></script>" #plotly script or another js library
+        f"</body>"
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
