@@ -222,15 +222,13 @@ def map_viz():
             f"<title>Oregon Crash Map</title>"
             f"<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' integrity='sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=' crossorigin='' />"
             # f"<link rel='stylesheet' type='text/css' href='FILEPATH'>" - link to our CSS style sheet
-        f"</head>" #in head will need to pull in leaflet script per leaflet challenge example
+        f"</head>" 
         f"<body>"
             f"<div id='map'></div>"
             f"<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' integrity='sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=' crossorigin=''></script>" #leaflet script
             f"<script src='https://d3js.org/d3.v7.min.js'></script>"
             #f"<script type='text/javascript' src='FILEPATH'></script>" - link to our javascript
         f"</body>"
-        # html <script> javascript file
-        # html <script> css file
     )
     
 
@@ -247,13 +245,30 @@ def dashboard_viz():
         f"</head>"
         f"<body>"
             f"<div class='container'>"
-                f"<h1>Dashboard goes here</h1>"
-                f"<h4>Use the interactive charts below to explore the dataset</h4>"
-                f"<script src='https://d3js.org/d3.v7.min.js'></script>" #plotly script 
-                f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>"
-                # html <script> javascript file
-                # html <script> css file
+                f"<div class='row'>"
+                    f"<div class='col-md-12 jumbotron text-center'>"
+                        f"<h1>Dashboard goes here</h1>"
+                        f"<h4>Use the interactive charts below to explore the dataset</h4>"
+                    f"</div>"
+                f"</div>"
+                f"<div class='row'>"
+                    f"<div class='col-md-2'>"
+                        f"<div class='well'>"
+                            f"<h5>Date:</h5>"
+                            f"<select id='selDate' onchange='optionChanged(this.value)'></select>"
+                        f"</div>"
+                    f"</div>"
+                    f"<div class='col-md-5'>"
+                        f"<div id='bar'></div>"
+                    f"</div>"
+                    f"<div class='col-md-5'>"
+                        f"<div id='plot'></div>"
+                    f"</div>"
+                f"</div>"
             f"</div>"
+            f"<script src='https://d3js.org/d3.v7.min.js'></script>" #plotly script 
+            f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>"
+            #f"<script src='FILEPATH'></script>" our javascript file
         f"</body>"   
         f"</html>"         
     )
