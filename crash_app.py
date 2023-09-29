@@ -21,14 +21,14 @@ Crashes = Base.classes.oregon_crashes
 
 print(Base.classes.keys())
 
-# session = Session(engine) # will need to comment this out when creating API
-
 app = Flask(__name__)
+
+#session = Session(engine) # will need to comment this out when creating API
 
 @app.route("/")
 def welcome():
     session = Session(engine)
-    # crash_list = session.query(Crashes.CRASH_ID).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
+    # Add HTML for welcome screen
     session.close()
 
     return (
@@ -40,20 +40,24 @@ def welcome():
 def crash_map():
     session = Session(engine)
 
-    # results = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).filter(dt.datetime.strptime(Crashes.CRASH_DT.tostring, "%m/%d/%Y") >= (dt.date(2019, 1, 1))).all()
-    results = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).filter(Crashes.CRASH_DT >= (dt.date(2019, 1, 1))).all()
-    #results = session.query(Crashes.CRASH_DT).filter(Crashes.CRASH_EVNT_1_CD == 35).all()
-    # results = session.query(Crashes.CRASH_ID).all()
+    results = session.query(Crashes.CRASH_DT, Crashes.LAT_DD, Crashes.HWY_MED_NM, Crashes.LONGTD_DD, Crashes.CRASH_TYP_SHORT_DESC, Crashes.CRASH_SVRTY_CD,
+                            Crashes.CRASH_SVRTY_SHORT_DESC, Crashes.CRASH_EVNT_1_CD, Crashes.CRASH_EVNT_2_CD, Crashes.CRASH_EVNT_3_CD,
+                            Crashes.CRASH_EVNT_1_SHORT_DESC, Crashes.CRASH_EVNT_2_SHORT_DESC, Crashes.CRASH_EVNT_3_SHORT_DESC,
+                            Crashes.CRASH_CAUSE_1_CD, Crashes.CRASH_CAUSE_2_CD, Crashes.CRASH_CAUSE_3_CD, Crashes.CRASH_CAUSE_1_SHORT_DESC, 
+                            Crashes.CRASH_CAUSE_2_SHORT_DESC, Crashes.CRASH_CAUSE_3_SHORT_DESC
+                            ).\
+        filter(Crashes.CRASH_EVNT_1_CD == 35).all() # store lat, long, roadway desc, crash type, crash severity in dict for map
     
     session.close()
 
     print(len(results))
     
-    deer_elk_crashes = np.ravel(results).tolist()
+    # deer_elk_crashes = np.ravel(results).tolist()
+    animal_crash_dict = dict(results)
 
-    print(len(deer_elk_crashes))
+    print(len(animal_crash_dict))
 
-    return jsonify(deer_elk_crashes)
+    return jsonify(animal_crash_dict)
     #return("hello")
 
 if __name__ == "__main__":
