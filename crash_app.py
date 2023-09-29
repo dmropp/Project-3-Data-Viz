@@ -214,23 +214,48 @@ def dashboard():
 @app.route("/api/v1.0/map_viz")
 def map_viz():
     return(
-        f"<head></head>"
+        f"<html lang='en'>"
+        f"<head>"
+            f"<meta charset='UTF-8'>"
+            f"<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
+            f"<meta http-equiv='X-UA Compatible' content='ie=edge'>"
+            f"<title>Oregon Crash Map</title>"
+            f"<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' integrity='sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=' crossorigin='' />"
+            # f"<link rel='stylesheet' type='text/css' href='FILEPATH'>" - link to our CSS style sheet
+        f"</head>" #in head will need to pull in leaflet script per leaflet challenge example
         f"<body>"
-        f"<h1>Map goes here</h1>"
-        f"<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' integrity='sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=' crossorigin=''></script>"
+            f"<div id='map'></div>"
+            f"<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' integrity='sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=' crossorigin=''></script>" #leaflet script
+            f"<script src='https://d3js.org/d3.v7.min.js'></script>"
+            #f"<script type='text/javascript' src='FILEPATH'></script>" - link to our javascript
         f"</body>"
+        # html <script> javascript file
+        # html <script> css file
     )
-    # html <script> javascript file
-    # html <script> css file
+    
 
 @app.route("/api/v1.0/dashboard_viz")
 def dashboard_viz():
     return(
-        f"<head></head>"
+        f"<html lang='en'>"
+        f"<head>"
+            f"<meta charset='UTF-8'>"
+            f"<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
+            f"<meta http-equiv='X-UA-Compatible' content='ie=edge'>"
+            f"<title>Oregon Crash Dashboard</title>"
+            f"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>"
+        f"</head>"
         f"<body>"
-        f"<h1>Dashboard goes here</h1>"
-        f"<script></script>" #plotly script or another js library
-        f"</body>"
+            f"<div class='container'>"
+                f"<h1>Dashboard goes here</h1>"
+                f"<h4>Use the interactive charts below to explore the dataset</h4>"
+                f"<script src='https://d3js.org/d3.v7.min.js'></script>" #plotly script 
+                f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>"
+                # html <script> javascript file
+                # html <script> css file
+            f"</div>"
+        f"</body>"   
+        f"</html>"         
     )
 
 if __name__ == "__main__":
