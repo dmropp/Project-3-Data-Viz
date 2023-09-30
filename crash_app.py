@@ -43,6 +43,7 @@ def welcome():
 def crash_map():
     session = Session(engine)
 
+    # Filter crash data by codes 34(wild game) and 35(deer or elk)
     results_1 = session.query(Crashes.CRASH_DT, Crashes.HWY_MED_NM, Crashes.LAT_DD, Crashes.LONGTD_DD, Crashes.CRASH_TYP_CD, Crashes.CRASH_TYP_SHORT_DESC, Crashes.CRASH_SVRTY_CD,
                             Crashes.CRASH_SVRTY_SHORT_DESC, Crashes.CRASH_EVNT_1_CD, Crashes.CRASH_EVNT_2_CD, Crashes.CRASH_EVNT_3_CD,
                             Crashes.CRASH_EVNT_1_SHORT_DESC, Crashes.CRASH_EVNT_2_SHORT_DESC, Crashes.CRASH_EVNT_3_SHORT_DESC,
@@ -93,6 +94,7 @@ def crash_map():
         
     session.close()
 
+    # Create dictionary of filtered crash data
     animal_crashes = []
     results_list = [results_1, results_2, results_3, results_4, results_5, results_6]
     for result in results_list:
@@ -130,6 +132,7 @@ def dashboard():
 
     session = Session(engine)
 
+    # Filter crash data by codes 34(wild game) and 35(deer or elk)
     results_1 = session.query(Crashes.CRASH_DT, Crashes.HWY_MED_NM, Crashes.LAT_DD, Crashes.LONGTD_DD, Crashes.CRASH_TYP_CD, Crashes.CRASH_TYP_SHORT_DESC, Crashes.CRASH_SVRTY_CD,
                             Crashes.CRASH_SVRTY_SHORT_DESC, Crashes.CRASH_EVNT_1_CD, Crashes.CRASH_EVNT_2_CD, Crashes.CRASH_EVNT_3_CD,
                             Crashes.CRASH_EVNT_1_SHORT_DESC, Crashes.CRASH_EVNT_2_SHORT_DESC, Crashes.CRASH_EVNT_3_SHORT_DESC,
@@ -180,6 +183,7 @@ def dashboard():
     
     session.close()
 
+    # Create dictionary of filtered crash data
     animal_crashes = []
     results_list = [results_1, results_2, results_3, results_4, results_5, results_6]
     for result in results_list:
@@ -220,18 +224,18 @@ def map_viz():
             f"<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
             f"<meta http-equiv='X-UA Compatible' content='ie=edge'>"
             f"<title>Oregon Crash Map</title>"
-            f"<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' integrity='sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=' crossorigin='' />"
+            f"<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' integrity='sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=' crossorigin='' />" #leaflet stylesheet
             # f"<link rel='stylesheet' type='text/css' href='FILEPATH'>" - link to our CSS style sheet
         f"</head>" 
         f"<body>"
             f"<div id='map'></div>"
             f"<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' integrity='sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=' crossorigin=''></script>" #leaflet script
-            f"<script src='https://d3js.org/d3.v7.min.js'></script>"
+            f"<script src='https://d3js.org/d3.v7.min.js'></script>" #D3 script
             #f"<script type='text/javascript' src='FILEPATH'></script>" - link to our javascript
         f"</body>"
     )
     
-
+# Dashboard visualization page
 @app.route("/api/v1.0/dashboard_viz")
 def dashboard_viz():
     return(
@@ -241,7 +245,7 @@ def dashboard_viz():
             f"<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
             f"<meta http-equiv='X-UA-Compatible' content='ie=edge'>"
             f"<title>Oregon Crash Dashboard</title>"
-            f"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>"
+            f"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>" # if we need custom CSS we can add the file to the head section
         f"</head>"
         f"<body>"
             f"<div class='container'>"
@@ -255,7 +259,7 @@ def dashboard_viz():
                     f"<div class='col-md-2'>"
                         f"<div class='well'>"
                             f"<h5>Date:</h5>"
-                            f"<select id='selDate' onchange='optionChanged(this.value)'></select>"
+                            f"<select id='selDate' onchange='optionChanged(this.value)'></select>" # Used the same code from the belly button challenge to handle the drop down menu
                         f"</div>"
                     f"</div>"
                     f"<div class='col-md-5'>"
@@ -266,8 +270,8 @@ def dashboard_viz():
                     f"</div>"
                 f"</div>"
             f"</div>"
-            f"<script src='https://d3js.org/d3.v7.min.js'></script>" #plotly script 
-            f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>"
+            f"<script src='https://d3js.org/d3.v7.min.js'></script>" #D3 script 
+            f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>" #Plotly script
             #f"<script src='FILEPATH'></script>" our javascript file
         f"</body>"   
         f"</html>"         
@@ -277,7 +281,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-
+# debugging
 # inspector = inspect(engine)
 # print(inspector.get_table_names())
 # columns = inspector.get_columns('oregon_crashes')
