@@ -15,6 +15,7 @@ Path(database_path).touch()
 conn = sqlite3.connect(database_path)
 c = conn.cursor()
 
+
 #This code creates an initial table to hold all data, imports the data from the csv files, creates a class with a second table, copies the
 #desired columns into the new table, drops the original table, and then clears the empty space in the database via vacuum. The SQLite database was
 #created via commands in the terminal.
