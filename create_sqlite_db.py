@@ -19,7 +19,7 @@ c = conn.cursor()
 #desired columns into the new table, drops the original table, and then clears the empty space in the database via vacuum. The SQLite database was
 #created via commands in the terminal.
 
-#Create the initial table for all columns in the csv files. Run this code block first.
+# Create the initial table for all columns in the csv files. Run this code block first.
 # added IF NOT EXISTS to the query as an extra failsafe in case a table already exists
 c.execute('''CREATE TABLE IF NOT EXISTS crashes (CRASH_ID	int, SER_NO int, CRASH_DT date, CRASH_MO_NO	int, CRASH_DAY_NO int, CRASH_YR_NO int,
     CRASH_WK_DAY_CD	int, CRASH_HR_NO int, CRASH_HR_SHORT_DESC text, CNTY_ID	int, CNTY_NM text, CITY_SECT_ID	int, CITY_SECT_NM text,
@@ -50,8 +50,8 @@ c.execute('''CREATE TABLE IF NOT EXISTS crashes (CRASH_ID	int, SER_NO int, CRASH
     LANE_RDWY_DPRT_CRASH_FLG text)'''
     )
 
-#Import csv data to initial table. Run this code block second.
-#modified to work with my machines file directory. Will need to change to be more general at some point
+# Import csv data to initial table. Run this code block second.
+# Modified to work with my machines file directory. Will need to change to be more general at some point
 csv_crashes_2016 = pd.read_csv("C:/Users/lanel/OneDrive/Desktop/Project-3-Data-Viz/Data/CRASH_2016.csv")
 csv_crashes_2016.to_sql("crashes", conn, if_exists='append', index=False)
 csv_crashes_2017 = pd.read_csv("C:/Users/lanel/OneDrive/Desktop/Project-3-Data-Viz/Data/CRASH_2017.csv")
@@ -65,29 +65,7 @@ csv_crashes_2020.to_sql("crashes", conn, if_exists='append', index=False)
 csv_crashes_2021 = pd.read_csv("C:/Users/lanel/OneDrive/Desktop/Project-3-Data-Viz/Data/CRASH_2021.csv")
 csv_crashes_2021.to_sql("crashes", conn, if_exists='append', index=False)
 
-# Copy data from the original table into new table. Run this code block fourth.
-c.execute('''INSERT INTO oregon_crashes(CRASH_ID, CRASH_DT, HWY_MED_NM, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
-  CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
-  CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
-  CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
-  CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC) 
-  SELECT CRASH_ID, CRASH_DT, HWY_MED_NM, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
-  CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
-  CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
-  CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
-  CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC FROM crashes''')
-
-#Drop the original table. Run this code block fifth.
-c.execute('''DROP TABLE crashes''')
-
-#Deletes all empty space in the database. Run this code block sixth.
-c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
-
-conn.commit()
-
-conn.close()
-
-# #Create oregon_crashes class and new table with desired columns. Run this code block third.
+# Create oregon_crashes class and new table with desired columns. Run this code block third.
 class Oregon_crashes(Base):
     __tablename__ = "oregon_crashes"
     CRASH_ID = Column(Integer, primary_key=True)
@@ -119,3 +97,25 @@ from sqlalchemy.orm import Session
 session = Session(bind=engine)
 session.commit()
 session.close()
+
+# Copy data from the original table into new table. Run this code block fourth.
+c.execute('''INSERT OR IGNORE INTO oregon_crashes(CRASH_ID, CRASH_DT, HWY_MED_NM, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
+  CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
+  CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
+  CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
+  CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC) 
+  SELECT CRASH_ID, CRASH_DT, HWY_MED_NM, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
+  CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
+  CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
+  CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
+  CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC FROM crashes''')
+
+# Drop the original table. Run this code block fifth.
+c.execute('''DROP TABLE crashes''')
+
+# Deletes all empty space in the database. Run this code block sixth.
+c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
+
+conn.commit()
+
+conn.close()
