@@ -27,3 +27,4 @@ Data Used
 - Crash Cause Description - CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_SHORT_DESC
 
 https://www.sqlite.org/cli.html, referenced for how to create SQLite database in command line.
+https://realpython.com/flask-javascript-frontend-for-rest-api/#step-2-build-the-front-end-components, referenced for overall project scope and how to call javascript files in HTML

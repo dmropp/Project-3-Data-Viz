@@ -1,7 +1,6 @@
-var mapQueryURL = "http://127.0.0.1:5000/api/v1.0/crash_map";
-//var mapQueryURL = "127.0.0.1:5000/api/v1.0/crash_map";
+var mapQueryURL = "http://127.0.0.1:5000/map_data";
 
-// D3 call for map viz
+// D3 call for map data
 d3.json(mapQueryURL).then(function(data) { 
     console.log("Hello")
     console.log(data);
