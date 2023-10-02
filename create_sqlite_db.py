@@ -22,6 +22,7 @@ c = conn.cursor()
 
 #Create the initial table for all columns in the csv files. Run this code block first.
 # added IF NOT EXISTS to the query as an extra failsafe in case a table already exists
+# https://www.geeksforgeeks.org/python-sqlite-create-table/?ref=lbp, referenced for table creation
 c.execute('''CREATE TABLE IF NOT EXISTS crashes (CRASH_ID	int, SER_NO int, CRASH_DT date, CRASH_MO_NO	int, CRASH_DAY_NO int, CRASH_YR_NO int,
     CRASH_WK_DAY_CD	int, CRASH_HR_NO int, CRASH_HR_SHORT_DESC text, CNTY_ID	int, CNTY_NM text, CITY_SECT_ID	int, CITY_SECT_NM text,
     URB_AREA_CD	int, URB_AREA_SHORT_NM text, FC_CD int, FC_SHORT_DESC text, NHS_FLG text, HWY_NO int, HWY_SFX_NO int,
@@ -48,7 +49,7 @@ c.execute('''CREATE TABLE IF NOT EXISTS crashes (CRASH_ID	int, SER_NO int, CRASH
     TOT_PER_INVLV_CNT int, TOT_SFTY_EQUIP_USED_QTY int, TOT_SFTY_EQUIP_UNUSED_QTY int, TOT_SFTY_EQUIP_USE_UNKNOWN_QTY int,
     TOT_PSNGR_VHCL_OCC_UNRESTRND_FATAL_CNT int, TOT_MCYCLST_FATAL_CNT int, TOT_MCYCLST_INJ_LVL_A_CNT int, TOT_MCYCLST_INJ_CNT int,
     TOT_MCYCLST_UNHELMTD_FATAL_CNT int, TOT_ALCHL_IMPAIRED_DRVR_INV_FATAL_CNT int, TOT_DRVR_AGE_01_20_CNT int,
-    LANE_RDWY_DPRT_CRASH_FLG text)'''
+    LANE_RDWY_DPRT_CRASH_FLG text);'''
     )
 
 #Import csv data to initial table. Run this code block second.
