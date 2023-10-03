@@ -1,3 +1,4 @@
+# this file only serves to create the oregon_crashes.sqlite file
 import sqlite3
 import pandas as pd
 
