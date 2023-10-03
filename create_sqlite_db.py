@@ -80,7 +80,7 @@ c = conn.cursor()
 #   CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC FROM crashes''')
 
 #Drop the original table. Run this code block fifth.
-# c.execute('''DROP TABLE crashes''')
+#c.execute('''DROP TABLE crashes''')
 
 #Deletes all empty space in the database. Run this code block sixth.
 #c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
