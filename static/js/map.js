@@ -25,9 +25,19 @@ function createMarkers(crashData) {
         var crashMarker = L.circle([lat, lng], { // https://stackoverflow.com/questions/43015854/large-dataset-of-markers-or-dots-in-leaflet
             color: "red",
             fillColor: "red",
-            fillOpacity: 1,
-            radius: 10
-        }).bindPopup("<h3>I'm a crash</h3>");
+            fillOpacity: 0.5,
+            radius: 500
+        }).bindPopup(`<b3>Location of Crash: ${crashData[i].hwy_name}</b3><br>
+                      <b3>Date of Crash: ${crashData[i].date}</b3><br>
+                      <b3>Type of Crash: ${crashData[i].crash_type_desc}</b3><br>
+                      <b3>Severity of Crash: ${crashData[i].crash_severity}</b3><br>
+                      <b3>Causes of Crash 1: ${crashData[i].crash_cause_1_desc}</b3><br>
+                      <b3>Causes of Crash 1: ${crashData[i].crash_cause_2_desc}</b3><br>
+                      <b3>Causes of Crash 1: ${crashData[i].crash_cause_3_desc}</b3><br>
+                      <b3>Factors in Crash: ${crashData[i].crash_event_1_desc}</b3><br>
+                      <b3>Factors in Crash: ${crashData[i].crash_event_2_desc}</b3><br>
+                      <b3>Factors in Crash: ${crashData[i].crash_event_3_desc}</b3><br>`
+                      );
         
 
         crashMarkerArray.push(crashMarker);
