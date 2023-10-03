@@ -18,7 +18,12 @@ c = conn.cursor()
 
 #This code creates an initial table to hold all data, imports the data from the csv files, creates a class with a second table, copies the
 #desired columns into the new table, drops the original table, and then clears the empty space in the database via vacuum. The SQLite database was
-#created via commands in the terminal.
+#created via commands in the terminal. 
+
+# Before running the code blocks below, in the terminal enter the following commands to create the empty database:
+# sqlite3 oregon_crashes.sqlite
+# .save oregon_crashes.sqlite
+# .quit
 
 #Create the initial table for all columns in the csv files. Run this code block first.
 # added IF NOT EXISTS to the query as an extra failsafe in case a table already exists
