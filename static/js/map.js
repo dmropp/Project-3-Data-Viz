@@ -1,73 +1,65 @@
 var mapQueryURL = "http://127.0.0.1:5000/map_data";
 
-// Perform a GET request to the query URL/
-d3.json(mapQueryURL).then(function (data) {
-  // Once we get a response, send the data.features object to the createFeatures function.
-  console.log(data)
-  createFeatures(data.features);
-});
+// D3 call for map data
+d3.json(mapQueryURL).then(function(data) { 
+    console.log("Hello")
+    // console.log(data);
+    createMarkers(data);
+})
 
-function createFeatures(earthquakeData) {
+function createMarkers(crashData) {
 
-  // Define a function that we want to run once for each feature in the features array.
-  // Give each feature a popup that describes the place and time of the earthquake.
-  function onEachFeature(feature, layer) {
-    layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
-  }
+    var crashMarkerArray = [];
 
-  // Create a GeoJSON layer that contains the features array on the earthquakeData object.
-  // Run the onEachFeature function once for each piece of data in the array.
-  // this is where the ColorPick and MarkerSize functions will likely come into play
-  var earthquakes = L.geoJSON(earthquakeData, {
-    onEachFeature: onEachFeature,
-    
-    //use pointToLayer to alter the markers
-    pointToLayer: function (feature, latlng) {
-        var markers = {
-            radius: MarkerSize(feature.properties.mag),
-            fillColor: ColorPick(feature.geometry.coordinates[2]),
-            fillOpacity: 0.6,
-            color: "black",
-            stroke: true,
-            weight: 0.5
-          }
-        return L.circleMarker(latlng, markers);
+    console.log(crashData.length);
+
+    for (let i = 0; i < crashData.length; i++) {
+
+        var lng = crashData[i].lng;
+        var lat = crashData[i].lat; 
+
+        //console.log(lng);
+        //console.log(lat);
+
+        //var crashMarker = L.marker([lat, lng]).bindPopup("<h3>I'm a crash</h3>");
+        var crashMarker = L.circle([lat, lng], { // https://stackoverflow.com/questions/43015854/large-dataset-of-markers-or-dots-in-leaflet
+            color: "red",
+            fillColor: "red",
+            fillOpacity: 0.5,
+            radius: 500
+        }).bindPopup(`<b3>Location of Crash: ${crashData[i].hwy_name}</b3><br>
+                      <b3>Date of Crash: ${crashData[i].date}</b3><br>
+                      <b3>Type of Crash: ${crashData[i].crash_type_desc}</b3><br>
+                      <b3>Severity of Crash: ${crashData[i].crash_severity}</b3><br>
+                      <b3>Causes of Crash 1: ${crashData[i].crash_cause_1_desc}</b3><br>
+                      <b3>Causes of Crash 1: ${crashData[i].crash_cause_2_desc}</b3><br>
+                      <b3>Causes of Crash 1: ${crashData[i].crash_cause_3_desc}</b3><br>
+                      <b3>Factors in Crash: ${crashData[i].crash_event_1_desc}</b3><br>
+                      <b3>Factors in Crash: ${crashData[i].crash_event_2_desc}</b3><br>
+                      <b3>Factors in Crash: ${crashData[i].crash_event_3_desc}</b3><br>`
+                      );
+        
+
+        crashMarkerArray.push(crashMarker);
     }
-  });
-  // Send our earthquakes layer to the createMap function/
-  createMap(earthquakes);
-}
 
-function createMap(earthquakes) {
+    //console.log(crashMarkerArray.length);
 
-  // Create the base layers.
-  var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  });
+    createMap(L.layerGroup(crashMarkerArray));
+    console.log(crashMarkerArray);
+};
 
-  // Create an overlay object to hold our overlay.
+function createMap(crashLocations) {
 
-  // Create our map, giving it the streetmap and earthquakes layers to display on load.
-  var myMap = L.map("map", {
-    center: [
-      37.09, -95.71
-    ],
-    zoom: 5,
-    layers: [street, earthquakes]
-  });
-  
-  var legend = L.control({position: "bottomright"});
-  legend.onAdd = function() {
-    var div = L.DomUtil.create("div", "info legend"),
-    depth = [-10, 10, 30, 50, 70, 90];
+    var streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });  
 
-    div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
+    var map = L.map("map", {
 
-    for (var i = 0; i < depth.length; i++) {
-      div.innerHTML +=
-      '<i style="background:' + ColorPick(depth[i] + 1) + '"></i> ' + depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
-    }
-    return div;
-  };
-  legend.addTo(myMap)  
-}
+        center: [43.521, -120.587], // http://www.cogeographica.com/?post=oregon-s-geographic-centers&tag=high-desert, referenced for center of Oregon
+        zoom: 5,
+        layers: [streetmap, crashLocations],
+        preferCanvas: true
+    });
+};
