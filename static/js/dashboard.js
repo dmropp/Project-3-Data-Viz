@@ -16,9 +16,25 @@ function groupBy(objectArray, property) {
 var dashboardQueryURL = "http://127.0.0.1:5000/dashboard_data";
 
 d3.json(dashboardQueryURL).then(function(data) { // https://stackoverflow.com/questions/53716527/request-data-from-front-end-d3-json-from-python-flask-backend, referenced for how to call flask data from javascript    
-  console.log("Hello");
+  
+   
+  
+   console.log("Hello");
+  console.log(data);
   const groupedYear = groupBy(data, 'date');
   console.log(groupedYear);
+  //let d = new Date(data[0].date); // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear, referenced for how to get year from date
+  //let year = d.getFullYear();
+  //console.log(year);
+  let dropdownRow = d3.selectAll("#selDate");
+  let dates = Object.values(data);
+
+   // for (let i = 0; i < data.length; i++) {
+   //    //let d = new Date(data[i].date);
+   //    let d = new Date(dates[i].date);
+   //    let year = d.getFullYear();
+   //    let row = dropdownRow.append("option").text(`${year}`);
+   // }
 });
 
 // D3 call for dashboard data
