@@ -2,16 +2,12 @@ var mapQueryURL = "http://127.0.0.1:5000/map_data";
 
 // D3 call for map data
 d3.json(mapQueryURL).then(function(data) { 
-    console.log("Hello")
-    console.log(data);
     createMarkers(data);
 })
 
 function createMarkers(crashData) {
 
     var crashMarkerArray = [];
-
-    console.log(crashData.length);
 
     for (let i = 0; i < crashData.length; i++) {
 
@@ -41,7 +37,6 @@ function createMarkers(crashData) {
     }
 
     createMap(L.layerGroup(crashMarkerArray));
-    console.log(crashMarkerArray);
 };
 
 // Function to create map with marker layer
