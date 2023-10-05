@@ -5,8 +5,9 @@
 The purpose of this project is to identify hotspots for vehicle collisions involving deer and elk in order to better determine where safety improvements via signage or road modification needs to be prioritized to improve safety for drivers and animals. This will be achieved via mapping and an interactive dashboard. 
 
 -  The map will have markers for each crash incident by year. - PopUps - include crash code and severity
--  Bar chart of the top 10 routes for deer or elk-involved collisions.
--  A line chart of deer or elk-involved collisions over time.
+-  Bar chart of the top 10 routes for wild game, deer or elk-involved collisions.
+-  A bar chart of wild game, deer, or elk-involved collisions over time.
+-  A pie chart of crash severity with wild game, deer, or wild game.
 
 Data Source - https://www.oregon.gov/odot/Data/Pages/CrashDataProducts.aspx?wp8625=f%3a%7bc%3a38877%2co%3a%7bt%3a2%2co%3a%5b%22Decode+Database%22%5d%7d%7d
 
@@ -14,6 +15,7 @@ Data Used
 
 - Crash ID - CRASH_ID
 - Date - CRASH_DT
+- Year - CRASH_YR_NO
 - Route Name - HWY_MED_NM
 - Latitude - LAT_DD
 - Longitude - LONGTD_DD
@@ -28,3 +30,4 @@ Data Used
 
 https://www.sqlite.org/cli.html, referenced for how to create SQLite database in command line.
 https://realpython.com/flask-javascript-frontend-for-rest-api/#step-2-build-the-front-end-components, referenced for overall project scope and how to call javascript files in HTML
+All other references are commented in the relevent line of code.
