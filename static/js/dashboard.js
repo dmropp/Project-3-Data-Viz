@@ -15,41 +15,99 @@ function groupBy(objectArray, property) {
 
 var dashboardQueryURL = "http://127.0.0.1:5000/dashboard_data";
 
-function init (data){
-
-}
+var currentDataset;
 
 d3.json(dashboardQueryURL).then(function(data) { // https://stackoverflow.com/questions/53716527/request-data-from-front-end-d3-json-from-python-flask-backend, referenced for how to call flask data from javascript    
 
-   console.log("Hello");
-   console.log(data);
+   // console.log("Hello");
+   // console.log(data);
    const groupedYear = groupBy(data, 'year');
    console.log(groupedYear);
+   currentDataset = groupedYear;
+   console.log(currentDataset);
 
    let dropdownRow = d3.selectAll("#selDate");
    let years = Object.keys(groupedYear);
-   console.log(years);
+   //console.log(years);
 
 
    for (let i = 0; i < years.length; i++) {
       let row = dropdownRow.append("option").text(`${years[i]}`);
    }
-   init(years[0]);
+   
+   let year2016 = groupedYear[2016];
+   // console.log(year2016);
+
+   // for (let j = 0; j < year2016.length; j++){
+   //    let row = year2016[j];
+   //    console.log(row);
+   // }
+   init(currentDataset[2016]);
 });
 
-d3.selectAll("#selDataset").on("change", optionChanged);
+d3.selectAll("#selDate").on("change", optionChanged);
 
 function optionChanged() {
     
-   let dropdownMenu = d3.select("#selDataset");
+   let dropdownMenu = d3.select("#selDate");
    let dataset = dropdownMenu.property("value");
 
-   // Function to filter sample data to select sample data for subject ID chosen in the dropdown menu
-   function selectValue(selectedID) {
-       return selectedID.id === dataset;
+   console.log(dataset);
+
+   let yearData = currentDataset[dataset];
+   init(yearData);
+}
+
+function init(data) {
+   console.log(data);
+
+   let hwy_grouped = groupBy(data, "hwy_name");
+   let highways = {};
+   for (let i = 0; i < Object.keys(hwy_grouped).length; i++){
+      let name = Object.keys(hwy_grouped)[i];
+      let count = Object.keys(hwy_grouped)[i].length;
+      highways[name] = count;
+   }
+   console.log(highways);
+
+   let x_data = Object.values(highways);
+   let y_data = Object.keys(highways);
+
+   let barChartData = [{
+      x: x_data.slice(0, 10).reverse(),
+      y: y_data.slice(0, 10).reverse(),
+      type: "bar",
+      orientation: "h"
+   }];
+
+   let barChartLayout = {
+    height: 600,
+    width: 600
+   };
+
+   Plotly.newPlot("bar", barChartData, barChartLayout);
+   let yearlyCrashes = {};
+
+   for (let i = 0; i < Object.keys(data).length; i++){
+     let name2 = Object.keys(data)[i];
+     let count2 = Object.keys(data)[i].length;
+     yearlyCrashes[name2] = count2;
    }
 
-   let yearData = years.filter(selectValue);
+   let x_data2 = Object.values(yearlyCrashes);
+   let y_data2 = Object.keys(yearlyCrashes);
 
-   init(yearData[0]); // Call function to update plotswith selected subject
+   let lineChartData = [{
+      x: x_data2,
+      y: y_data2,
+      type: "plot"
+   }];
+
+   let lineChartLayout = {
+      height: 600,
+      width: 600
+     };
+  
+     Plotly.newPlot("plot", lineChartData, lineChartLayout);
 }
+
