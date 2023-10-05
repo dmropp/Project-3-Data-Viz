@@ -31,10 +31,15 @@ def welcome():
     return (
         f"<h2 id='Welcome Page Header'>Welcome to our Oregon Crash App!</h2>" 
         f"<h3 id='Subheader'>Please use the following routes:</h3>"
-        f"<p>/map_data for json data of all car crashes in Oregon involving wild animals<br>"
-        f"/dashboard_data for json data of all car crashes in Oregon involving wild animals<br>"
-        f"/map for an interactive map illustrating the location of all call crashes in Oregon involving wild animals <br>"
-        f"/dashboard for an interactive dashboard of statistics behind car crashes with wild animals in Oregon<p/>"
+        f"<p>/"
+        f"<a href='http://127.0.0.1:5000/map_data'>map_data </a>"
+        f"for json data of all car crashes in Oregon involving wild animals<br>"
+        f"/<a href='http://127.0.0.1:5000/dashboard_data'>dashboard_data </a>"
+        f"for json data of all car crashes in Oregon involving wild animals<br>"
+        f"/<a href='http://127.0.0.1:5000/map'>map </a>"
+        f"for an interactive map illustrating the location of all call crashes in Oregon involving wild animals <br>"
+        f"/<a href='http://127.0.0.1:5000/dashboard'>dashboard </a>"
+        f"for an interactive dashboard of statistics behind car crashes with wild animals in Oregon<p/>"
     )
 
 @app.route("/map_data")
