@@ -74,19 +74,19 @@ c = conn.cursor()
 # csv_crashes_2021.to_sql("crashes", conn, if_exists='append', index=False)
 
 # Copy data from the original table into new table. Run this code block fourth.
-# c.execute('''INSERT INTO oregon_crashes(CRASH_ID, CRASH_DT, HWY_MED_NM, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
+# c.execute('''INSERT INTO oregon_crashes(CRASH_ID, CRASH_DT, CRASH_YR_NO, HWY_MED_NM, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
 #   CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
 #   CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
 #   CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
 #   CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC) 
-#   SELECT CRASH_ID, CRASH_DT, HWY_MED_NM, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
+#   SELECT CRASH_ID, CRASH_DT, CRASH_YR_NO, HWY_MED_NM, LAT_DD, LONGTD_DD, CRASH_TYP_CD, CRASH_TYP_SHORT_DESC,
 #   CRASH_SVRTY_CD, CRASH_SVRTY_SHORT_DESC, CRASH_EVNT_1_CD, CRASH_EVNT_1_SHORT_DESC,
 #   CRASH_EVNT_2_CD, CRASH_EVNT_2_SHORT_DESC, CRASH_EVNT_3_CD,
 #   CRASH_EVNT_3_SHORT_DESC, CRASH_CAUSE_1_CD, CRASH_CAUSE_1_SHORT_DESC, CRASH_CAUSE_2_CD, 
 #   CRASH_CAUSE_2_SHORT_DESC, CRASH_CAUSE_3_CD, CRASH_CAUSE_3_SHORT_DESC FROM crashes''')
 
 #Drop the original table. Run this code block fifth.
-#c.execute('''DROP TABLE crashes''')
+# c.execute('''DROP TABLE crashes''')
 
 #Deletes all empty space in the database. Run this code block sixth.
 #c.execute("VACUUM") # https://stackoverflow.com/questions/4712929/how-to-use-sqlite-3s-vacuum-command-in-python, how to use vacuum to clear unused space from database
@@ -100,6 +100,7 @@ conn.close()
 #     __tablename__ = "oregon_crashes"
 #     CRASH_ID = Column(Integer, primary_key=True)
 #     CRASH_DT = Column(String)
+#     CRASH_YR_NO = Column(Integer)
 #     HWY_MED_NM = Column(String)
 #     LAT_DD = Column(Float)
 #     LONGTD_DD = Column(Float)
