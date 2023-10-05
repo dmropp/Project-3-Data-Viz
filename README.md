@@ -9,7 +9,7 @@ The purpose of this project is to identify hotspots for vehicle collisions invol
 -  A bar chart of wild game, deer, or elk-involved collisions over time.
 -  A pie chart of crash severity with wild game, deer, or wild game.
 
-##Data Source 
+## Data Source 
 - https://www.oregon.gov/odot/Data/Pages/CrashDataProducts.aspx?wp8625=f%3a%7bc%3a38877%2co%3a%7bt%3a2%2co%3a%5b%22Decode+Database%22%5d%7d%7d
 
 Data Used
