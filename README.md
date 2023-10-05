@@ -4,7 +4,7 @@
 
 The purpose of this project is to identify hotspots for vehicle collisions involving deer and elk in order to better determine where safety improvements via signage or road modification needs to be prioritized to improve safety for drivers and animals. This will be achieved via mapping and an interactive dashboard. 
 
--  The map will have markers for each crash incident by year. - PopUps - include crash code and severity
+-  The map will have markers for each crash incident. PopUps - include crash code and severity
 -  Bar chart of the top 10 routes for wild game, deer or elk-involved collisions.
 -  A bar chart of wild game, deer, or elk-involved collisions over time.
 -  A pie chart of crash severity with wild game, deer, or wild game.
