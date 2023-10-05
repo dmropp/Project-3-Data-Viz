@@ -1,5 +1,4 @@
-//https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451, add to readme for general project reference
-
+// Function to group data by a desired value
 // from https://www.tutorialspoint.com/most-efficient-method-to-groupby-on-an-array-of-objects-in-javascript
 function groupBy(objectArray, property) {
     return objectArray.reduce((acc, obj) => {
@@ -15,14 +14,13 @@ function groupBy(objectArray, property) {
 
 var dashboardQueryURL = "http://127.0.0.1:5000/dashboard_data";
 
-var currentDataset;
+var currentDataset; // Variable to store dataset to be passed to each function
 
+// Function to call data and populate dropdown menu with years
 d3.json(dashboardQueryURL).then(function(data) { // https://stackoverflow.com/questions/53716527/request-data-from-front-end-d3-json-from-python-flask-backend, referenced for how to call flask data from javascript    
 
    const groupedYear = groupBy(data, 'year');
-   //console.log(groupedYear);
    currentDataset = groupedYear;
-   console.log(currentDataset);
 
    let dropdownRow = d3.selectAll("#selDate");
    let years = Object.keys(groupedYear);
@@ -34,27 +32,26 @@ d3.json(dashboardQueryURL).then(function(data) { // https://stackoverflow.com/qu
    let year2016 = groupedYear[2016];
    let currentSelection = d3.select("#selDate");
    let currentYear = currentSelection.property("value");
-   //console.log(currentYear);
 
    init(currentDataset[currentYear]);
 });
 
-d3.selectAll("#selDate").on("change", optionChanged);
+d3.selectAll("#selDate").on("change", optionChanged); // Method called when new value is selected in the dropdown menu
 
+// Function to assign value selected in the dropdown menu to a variable, and pass the variable to update plots
 function optionChanged() {
     
    let dropdownMenu = d3.select("#selDate");
    let dataset = dropdownMenu.property("value");
 
-   //console.log(dataset);
-
    let yearData = currentDataset[dataset];
    init(yearData);
 }
 
+// Function to build plots
 function init(data) {
-   //console.log(data);
 
+   // Group by highway name and add to object where highway name is the key and the count of crashes on that highway is the value
    let hwy_grouped = groupBy(data, "hwy_name");
    let highways = {}; // https://code.mu/en/javascript/book/prime/loops/objects-filling/, referenced for how to populate object with for loop
    for (let i = 0; i < Object.keys(hwy_grouped).length; i++){ 
@@ -62,12 +59,11 @@ function init(data) {
       let count = Object.keys(hwy_grouped)[i].length;
       highways[name] = count;
    }
-   //console.log(highways);
 
    // https://medium.com/@gmcharmy/sort-objects-in-javascript-e-c-how-to-get-sorted-values-from-an-object-142a9ae7157c, referenced for how to sort object
    let highways_sorted = Object.entries(highways).sort((a,b) => b[1] - a[1]); 
-   //console.log(highways_sorted);
 
+   // Push highway names and counts to arrays for use in the bar chart
    let bar_x_data = [];
    let bar_y_data = [];
    for (let j = 0; j < highways_sorted.length; j++) {
@@ -98,11 +94,8 @@ function init(data) {
 
    Plotly.newPlot("bar", barChartData, barChartLayout);
 
+   // Group by crash date and add to object where the key is the date and the value is the number of crashes on that date
    let dateGrouped = groupBy(data, "date");
-   //console.log(dateGrouped);
-
-   //console.log(dateGrouped);
-
    let dateGroups = {};
    for (let k = 0; k < Object.keys(dateGrouped).length; k++){ 
       let date = Object.keys(dateGrouped)[k];
@@ -110,27 +103,22 @@ function init(data) {
       dateGroups[date] = count;
    }
 
-   //console.log(Object.keys(dateGroups).length);
-
+   // Push dates and counts to arrays for use in the bar chart plotting collisions over time
    let plot_x_data = [];
    let plot_y_data = [];
-
    for (let l = 0; l < Object.keys(dateGroups).length; l++) {
       plot_x_data.push(Object.keys(dateGroups)[l]);
       plot_y_data.push(Object.values(dateGroups)[l]);
    }
 
-   //console.log(plot_x_data);
-   //console.log(plot_y_data);
-
-   let lineChartData = [{
+   let timeseriesData = [{
       x: plot_x_data,
       y: plot_y_data,
       type: "bar", 
       automargin: true
    }];
 
-   let lineChartLayout = {
+   let timeseriesLayout = {
       height: 600,
       width: 800, 
       title: "Vehicle Collisions with Animals Over Time",
@@ -143,14 +131,10 @@ function init(data) {
       }
    };
   
-   Plotly.newPlot("plot", lineChartData, lineChartLayout);
+   Plotly.newPlot("plot", timeseriesData, timeseriesLayout);
 
+   // Group by crash severity and add to object where the key is the crash severity and the value is the related number of crashes by severity category
    let severityGrouped = groupBy(data, "crash_severity_desc");
-   
-   console.log(severityGrouped);
-
-   //console.log(dateGrouped);
-
    let severityGroups = {};
    for (let m = 0; m < Object.keys(severityGrouped).length; m++){ 
       let severity = Object.keys(severityGrouped)[m];
@@ -158,19 +142,13 @@ function init(data) {
       severityGroups[severity] = count;
    }
 
-   console.log(severityGroups);
-
+   // Push severity category and crash counts to arrays for use in the pie chart plotting % of crashes by severity
    let pie_x_data = [];
    let pie_y_data = [];
-
    for (let n = 0; n < Object.keys(severityGroups).length; n++) {
-      //console.log(Object.keys(severityGroups)[n]);
       pie_x_data.push(Object.keys(severityGroups)[n]);
       pie_y_data.push(Object.values(severityGroups)[n]);
    }
-
-   console.log(pie_x_data);
-   console.log(pie_y_data);
 
    // https://plotly.com/javascript/pie-charts/, referenced for how to create a pie chart
    let pieChartData = [{
@@ -188,5 +166,4 @@ function init(data) {
    }
 
    Plotly.newPlot("pie", pieChartData, pieChartLayout);
-
 }
