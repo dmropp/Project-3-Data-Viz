@@ -31,6 +31,7 @@ d3.json(dashboardQueryURL).then(function(data) { // https://stackoverflow.com/qu
    //console.log(years);
 
 
+
    for (let i = 0; i < years.length; i++) {
       let row = dropdownRow.append("option").text(`${years[i]}`);
    }
@@ -110,4 +111,3 @@ function init(data) {
   
      Plotly.newPlot("plot", lineChartData, lineChartLayout);
 }
-
