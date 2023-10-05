@@ -8,7 +8,7 @@
     <title>Oregon Crash Dashboard</title>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
     <!-- Our javascript file -->
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}" type="module"></script>
+    <!-- <script src="{{ url_for('static', filename='js/dashboard.js') }}" type="module"></script> -->
 </head>
 <body>
     <div class='container'>
@@ -38,5 +38,6 @@
     <script src='https://d3js.org/d3.v7.min.js'></script>
     <!-- Plotly script -->
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}" type="module"></script>
 </body>   
 </html>
