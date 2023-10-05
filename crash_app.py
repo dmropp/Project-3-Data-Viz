@@ -28,7 +28,7 @@ def welcome():
     session = Session(engine)
     session.close()
 
-    return (
+    return ( # https://www.w3schools.com/html/html_links.asp, referenced for how to use HTML links
         f"<h2 id='Welcome Page Header'>Welcome to our Oregon Crash App!</h2>" 
         f"<h3 id='Subheader'>Please use the following routes:</h3>"
         f"<p>/"
