@@ -15,96 +15,99 @@ function groupBy(objectArray, property) {
 
 var dashboardQueryURL = "http://127.0.0.1:5000/dashboard_data";
 
+var currentDataset;
+
 d3.json(dashboardQueryURL).then(function(data) { // https://stackoverflow.com/questions/53716527/request-data-from-front-end-d3-json-from-python-flask-backend, referenced for how to call flask data from javascript    
-  
-   
-  
-   console.log("Hello");
-   console.log(data);
+
+   // console.log("Hello");
+   // console.log(data);
    const groupedYear = groupBy(data, 'year');
    console.log(groupedYear);
+   currentDataset = groupedYear;
+   console.log(currentDataset);
 
    let dropdownRow = d3.selectAll("#selDate");
    let years = Object.keys(groupedYear);
-   console.log(years);
+   //console.log(years);
+
 
 
    for (let i = 0; i < years.length; i++) {
       let row = dropdownRow.append("option").text(`${years[i]}`);
    }
+   
+   let year2016 = groupedYear[2016];
+   // console.log(year2016);
+
+   // for (let j = 0; j < year2016.length; j++){
+   //    let row = year2016[j];
+   //    console.log(row);
+   // }
+   init(currentDataset[2016]);
 });
-function init (){
-   let data = d3.json(dashboardQueryURL).then(function(data) { // https://stackoverflow.com/questions/53716527/request-data-from-front-end-d3-json-from-python-flask-backend, referenced for how to call flask data from javascript    
-      console.log("Hello");
-      const groupedYear = groupBy(data, 'date');
-      console.log(groupedYear);
 
-      let dates = groupedYear;
+d3.selectAll("#selDate").on("change", optionChanged);
 
-      init_dropdown (dates);
-
-      console.log("Date: "+ dates);
+function optionChanged() {
     
-      plotBarChart(dates[0]);
-   });
-}
-
-function plotBarChart (crashes){
-
-   let numSamples = (samples.sample_values.slice(0,10));
-   numSamples = numSamples.reverse();
-   
-   let axis = samples.otu_ids.slice(0,10).map(sample => `OTU ${sample}`);
-   axis = axis.reverse();
-
-
-   let labels =  (samples.otu_labels.slice(0,10));
-   labels = labels.reverse();
-   
-   
-   let trace = {
-       x: numSamples,
-       y: axis,
-       text: labels,
-       name: "OTU",
-       type: "bar",
-       orientation: "h"
-  };
-  
-  let traceData = [trace];
-  
-  let layout = {
-    title: "<b>Top 10 OTUs</b>",
-    margin: {
-      l: 100,
-      r: 100,
-      t: 100,
-      b: 100
-    }
-  };
-  
-  Plotly.newPlot("bar", traceData, layout);
-}
-
-function init_dropdown (dates){
-  let dropdownMenu = d3.select("#selDataset");
-  
-  for (let i = 0; i<dates.length;i++){
-    dropdownMenu.append("option").text(dates[i]).property("value", i);
-  }
-}
-
-function optionChanged (){
-   let dropdownMenu = d3.select("#selDataset");
-
+   let dropdownMenu = d3.select("#selDate");
    let dataset = dropdownMenu.property("value");
 
-   let data = d3.json(url).then(function(data) {
-     console.log(data);
+   console.log(dataset);
+
+   let yearData = currentDataset[dataset];
+   init(yearData);
+}
+
+function init(data) {
+   console.log(data);
+
+   let hwy_grouped = groupBy(data, "hwy_name");
+   let highways = {};
+   for (let i = 0; i < Object.keys(hwy_grouped).length; i++){
+      let name = Object.keys(hwy_grouped)[i];
+      let count = Object.keys(hwy_grouped)[i].length;
+      highways[name] = count;
+   }
+   console.log(highways);
+
+   let x_data = Object.values(highways);
+   let y_data = Object.keys(highways);
+
+   let barChartData = [{
+      x: x_data.slice(0, 10).reverse(),
+      y: y_data.slice(0, 10).reverse(),
+      type: "bar",
+      orientation: "h"
+   }];
+
+   let barChartLayout = {
+    height: 600,
+    width: 600
+   };
+
+   Plotly.newPlot("bar", barChartData, barChartLayout);
+   let yearlyCrashes = {};
+
+   for (let i = 0; i < Object.keys(data).length; i++){
+     let name2 = Object.keys(data)[i];
+     let count2 = Object.keys(data)[i].length;
+     yearlyCrashes[name2] = count2;
+   }
+
+   let x_data2 = Object.values(yearlyCrashes);
+   let y_data2 = Object.keys(yearlyCrashes);
+
+   let lineChartData = [{
+      x: x_data2,
+      y: y_data2,
+      type: "plot"
+   }];
+
+   let lineChartLayout = {
+      height: 600,
+      width: 600
+     };
   
-     let crashes = data;
-  
-     plotBarChart(crashes[dataset]);
-  });
- }
- init();
+     Plotly.newPlot("plot", lineChartData, lineChartLayout);
+}
