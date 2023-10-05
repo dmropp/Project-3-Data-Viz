@@ -18,10 +18,7 @@ function createMarkers(crashData) {
         var lng = crashData[i].lng;
         var lat = crashData[i].lat; 
 
-        //console.log(lng);
-        //console.log(lat);
-
-        //var crashMarker = L.marker([lat, lng]).bindPopup("<h3>I'm a crash</h3>");
+        // Create circle markers for each crash location with popup description. 
         var crashMarker = L.circle([lat, lng], { // https://stackoverflow.com/questions/43015854/large-dataset-of-markers-or-dots-in-leaflet
             color: "red",
             fillColor: "red",
@@ -43,12 +40,11 @@ function createMarkers(crashData) {
         crashMarkerArray.push(crashMarker);
     }
 
-    //console.log(crashMarkerArray.length);
-
     createMap(L.layerGroup(crashMarkerArray));
     console.log(crashMarkerArray);
 };
 
+// Function to create map with marker layer
 function createMap(crashLocations) {
 
     var streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -60,6 +56,6 @@ function createMap(crashLocations) {
         center: [43.521, -120.587], // http://www.cogeographica.com/?post=oregon-s-geographic-centers&tag=high-desert, referenced for center of Oregon
         zoom: 5,
         layers: [streetmap, crashLocations],
-        preferCanvas: true
+        preferCanvas: true // https://stackoverflow.com/questions/43015854/large-dataset-of-markers-or-dots-in-leaflet, referenced for how to improve performance on maps with thousands of markers
     });
 };
