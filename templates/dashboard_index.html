@@ -1,45 +1,49 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Oregon Crash Dashboard</title>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-    <!-- Our javascript file -->
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}" type="module"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- link to our css stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
 <body>
-    <div class='container'>
-        <div class='row'>
-            <div class='col-md-12 jumbotron text-center'>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center">
                 <h1>Oregon Traffic Collision Dashboard</h1>
                 <h4>Use the interactive charts below to explore data related to collisions with wild animals on Oregon roadways</h4>
             </div>
         </div>
-        <div class='row'>
-            <div class='col-md-2'>
-                <div class='well'>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="well">
                     <h5>Date:</h5>
                     <!-- Used the same code from the belly button challenge to handle the drop down menu -->
-                    <select id='selDate' onchange='optionChanged(this.value)'></select>
+                    <select id="selDate" onchange="optionChanged(this.value)"></select>
                 </div>
             </div>
-            <div class='col-md-5'>
-                <div id='bar'></div>
-            </div>
-            <div class='col-md-5'>
-                <div id='plot'></div>
-            </div>
-            <div class='col-md-5'>
-                <div id='pie'></div>
-            </div>
+        </div>
+        <div class="row">
+            <div id="bar"></div>
+        </div>
+        <div class="row">
+            <div id="plot"></div>
+        </div>
+        <div class="row">
+            <div id="pie"></div>
         </div>
     </div>
+    
     <!-- D3 script -->
-    <script src='https://d3js.org/d3.v7.min.js'></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <!-- Plotly script -->
-    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Our javascript file -->
+    <!-- <script src="{{ url_for('static', filename='js/dashboard.js') }}" type="module"></script> -->
+    <script src="../static/js/dashboard.js"></script>
 </body>   
 </html>

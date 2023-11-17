@@ -1,0 +1,23 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.row {
+    margin: auto;
+    width: 90%;
+    align-items: center;
+}
+
+#bar,
+#plot {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#pie {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}

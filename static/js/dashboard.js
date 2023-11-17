@@ -74,8 +74,7 @@ function init(data) {
    let barChartData = [{
       x: bar_x_data.slice(0, 20),
       y: bar_y_data.slice(0, 20),
-      type: "bar", 
-      automargin: true
+      type: "bar"
    }];
 
    let barChartLayout = {
@@ -88,11 +87,14 @@ function init(data) {
       automargin: true
    },
    yaxis: {
-      title: "# of Collisions"
+      title: "# of Collisions",
+      automargin: true
    }
    };
 
-   Plotly.newPlot("bar", barChartData, barChartLayout);
+   let barChartConfig = {responsive: true}
+
+   Plotly.newPlot("bar", barChartData, barChartLayout, barChartConfig);
 
    // Group by crash date and add to object where the key is the date and the value is the number of crashes on that date
    let dateGrouped = groupBy(data, "date");
@@ -114,8 +116,7 @@ function init(data) {
    let timeseriesData = [{
       x: plot_x_data,
       y: plot_y_data,
-      type: "bar", 
-      automargin: true
+      type: "bar"
    }];
 
    let timeseriesLayout = {
@@ -124,14 +125,18 @@ function init(data) {
       title: "Vehicle Collisions with Animals Over Time",
       xaxis: {
          tickangle: -45, 
-         title: "Date"
+         title: "Date",
+         automargin: true
       },
       yaxis: {
-         title: "# of Collisions"
+         title: "# of Collisions",
+         automargin: true
       }
    };
+
+   let timeseriesConfig = {responsive: true}
   
-   Plotly.newPlot("plot", timeseriesData, timeseriesLayout);
+   Plotly.newPlot("plot", timeseriesData, timeseriesLayout, timeseriesConfig);
 
    // Group by crash severity and add to object where the key is the crash severity and the value is the related number of crashes by severity category
    let severityGrouped = groupBy(data, "crash_severity_desc");
@@ -155,15 +160,17 @@ function init(data) {
       values: pie_y_data,
       labels: pie_x_data,
       type: "pie", 
-      automargin: true,
       textinfo: "label+percent"
    }];
 
    let pieChartLayout = {
       height: 600,
       width: 600, 
-      title: "Collisions by Severity"
+      title: "Collisions by Severity",
+      automargin: true
    }
 
-   Plotly.newPlot("pie", pieChartData, pieChartLayout);
+   let pieChartConfig = {responsive: true}
+
+   Plotly.newPlot("pie", pieChartData, pieChartLayout, pieChartConfig);
 }
