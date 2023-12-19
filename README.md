@@ -1,4 +1,4 @@
-# Project-3-Data-Viz
+# Project 3 - Oregon Crash App
 
 ## Vehicle Accidents in Oregon Involving Deer and Elk
 
