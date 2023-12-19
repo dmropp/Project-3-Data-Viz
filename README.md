@@ -1,5 +1,7 @@
 # Oregon Crash App
 
+Created by Liam Nelson and Adam Ropp.
+
 ## Vehicle Accidents in Oregon Involving Deer and Elk
 
 The purpose of this project is to identify hotspots for vehicle collisions involving deer and elk in order to better determine where safety improvements via signage or road modification needs to be prioritized to improve safety for drivers and animals. This will be achieved via mapping and an interactive dashboard. 
